@@ -1,8 +1,8 @@
-autocmd FileType python setlocal expandtab tabstop=2 smartindent shiftwidth=2
-autocmd FileType cpp setlocal expandtab tabstop=2 smartindent shiftwidth=2
-autocmd FileType shell setlocal expandtab tabstop=2 smartindent shiftwidth=2
-autocmd FileType cmake setlocal expandtab tabstop=2 smartindent shiftwidth=2
-autocmd FileType java setlocal expandtab tabstop=2 smartindent shiftwidth=2
+autocmd FileType python setlocal expandtab tabstop=4 smartindent shiftwidth=4
+autocmd FileType cpp setlocal expandtab tabstop=4 smartindent shiftwidth=4
+autocmd FileType shell setlocal expandtab tabstop=4 smartindent shiftwidth=4
+autocmd FileType cmake setlocal expandtab tabstop=4 smartindent shiftwidth=4
+autocmd FileType java setlocal expandtab tabstop=4 smartindent shiftwidth=4
 set wildmode=longest,list,full
 set wildmenu
 set wildchar=<Tab>
