@@ -1,0 +1,35 @@
+---
+- name: Check if virtualization is enabled
+  lineinfile:
+    path: /proc/cpuinfo
+    regexp: '(svm|vmx)'
+    state: present
+  check_mode: yes
+  register: presence
+  failed_when: presence is changed
+
+- name: Install virtualization packages
+  become: yes
+  package:
+    name:
+      - libvirt-daemon
+      - qemu-kvm
+      - vagrant
+    state: latest
+
+- name: Add current user {{ ansible_user_id  }} to virtualization groups
+  become: yes
+  user:
+    name: '{{ ansible_user_id }}'
+    groups:
+        - kvm
+        - libvirt
+        - libvirt-qemu
+    append: yes
+
+- name: Start/enable virtualization daemon
+  become: yes
+  service:
+    enabled: yes
+    name: libvirtd
+    state: started

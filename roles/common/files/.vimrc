@@ -403,4 +403,6 @@ if filereadable(uservimrc)
     execute 'source' . uservimrc
 end
 
+let g:ale_sign_column_always = 1
+
 " vim:foldmethod=marker:foldlevel=-
