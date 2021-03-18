@@ -37,7 +37,7 @@
 - name: Copy .tmux.conf
   copy:
     src: .tmux.conf
-    dest: "{{ ansible_env.HOME }}/.tmux"
+    dest: "{{ ansible_env.HOME }}/.tmux.conf"
 
 - name: Copy .bash_profile
   copy:
