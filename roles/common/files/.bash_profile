@@ -19,4 +19,4 @@ GREEN=$(tput setaf 2)
 YELLOW=$(tput setaf 3)
 RESET=$(tput sgr0)
 
-export PS1="${RESET}\u@\h ${GREEN}\W${YELLOW}\$(parse_git_branch)${RESET} $ "
+export PS1="${RESET}\u@\h ${GREEN}\W${YELLOW}\$(parse_git_branch)${RESET}\n$ "
