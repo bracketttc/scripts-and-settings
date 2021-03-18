@@ -24,8 +24,19 @@
     groups:
         - kvm
         - libvirt
-        - libvirt-qemu
     append: yes
+
+- name: Add current user {{ ansible_user_id }} to qemu groups
+  become: yes
+  ignore_errors: yes
+  user:
+    name: '{{ ansible_user_id }}'
+    groups:
+      - "{{ item }}"
+    append: yes
+  loop:
+    - qemu
+    - libvirt-qemu
 
 - name: Start/enable virtualization daemon
   become: yes
