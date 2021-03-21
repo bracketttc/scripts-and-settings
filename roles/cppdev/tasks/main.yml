@@ -1,0 +1,24 @@
+---
+- name: Install development tools from system
+  become: yes
+  package:
+    name:
+      - clang
+      - cmake
+      - cppcheck
+      - doxygen
+      - gcc
+      - gcc-c++
+      - gcovr
+      - gdb
+      - lcov
+      - make
+      - valgrind
+    state: latest
+
+- name: Install development tools from Pip
+  become: yes
+  pip:
+    name:
+      - cpplint
+    state: latest
