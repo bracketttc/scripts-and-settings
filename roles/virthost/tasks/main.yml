@@ -15,6 +15,7 @@
       - libvirt-daemon
       - qemu-kvm
       - vagrant
+      - vagrant-sshfs
     state: latest
 
 - name: Add current user {{ ansible_user_id  }} to virtualization groups
