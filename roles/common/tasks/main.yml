@@ -8,6 +8,12 @@
       - vim
     state: latest
 
+- name: Create .ssh dir
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    mode: "700"
+    state: directory
+
 - name: Generate ssh keys
   openssh_keypair:
     path: "~/.ssh/id_rsa"
