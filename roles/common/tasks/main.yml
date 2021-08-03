@@ -3,6 +3,7 @@
   become: yes
   package:
     name:
+      - fish
       - git
       - tmux
       - vim
@@ -49,3 +50,21 @@
   copy:
     src: .bash_profile
     dest: "{{ ansible_env.HOME }}/.bash_profile"
+
+- name: Run fish once to generate config files
+  command:
+    cmd: "fish -c 'sleep 2'"
+    creates: "{{ ansible_env.HOME }}/.config/fish"
+
+- name: Disable PWD truncation in fish
+  lineinfile:
+    line: "SETUVAR fish_prompt_pwd_dir_length:0"
+    path: "{{ ansible_env.HOME }}/.config/fish/fish_variables"
+    regex: "^SETUVAR fish_prompt_pwd_dir_length.*"
+    state: present
+
+- name: Set shell to fish
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: "/bin/fish"
