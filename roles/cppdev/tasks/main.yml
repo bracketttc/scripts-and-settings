@@ -13,6 +13,7 @@
       - gdb
       - lcov
       - make
+      - ninja-build
       - valgrind
     state: latest
 
