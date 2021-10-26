@@ -11,4 +11,6 @@ fi
 # install ansible galaxy components
 ansible-galaxy collection install -r requirements.yml
 
+sudo sed -ibackup 's/^#\(stdout_callback = \).*/\1yaml/' /etc/ansible/ansible.cfg
+
 echo "You are now ready to run playbooks in this repository."
