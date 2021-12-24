@@ -13,6 +13,7 @@
   package:
     name:
       - libvirt-daemon
+      - libvirt-daemon-system
       - qemu-kvm
       - vagrant
       - vagrant-sshfs
@@ -24,7 +25,6 @@
     name: '{{ ansible_user_id }}'
     groups:
         - kvm
-        - libvirt
     append: yes
 
 - name: Add current user {{ ansible_user_id }} to qemu groups
@@ -37,6 +37,7 @@
     append: yes
   loop:
     - qemu
+    - libvirt
     - libvirt-qemu
 
 - name: Start/enable virtualization daemon

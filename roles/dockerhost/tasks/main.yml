@@ -6,6 +6,16 @@
       - docker
     state: latest
 
+- name: Install docker.io
+  become: yes
+  package:
+    name:
+      - docker.io
+    state: latest
+  when:
+    - ansible_distribution == 'Debian'
+
+
 - name: Create docker group
   become: yes
   group:
