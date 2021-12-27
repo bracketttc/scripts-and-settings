@@ -43,3 +43,4 @@
     - .vimrc
     - .tmux.conf
     - .bash_profile
+    - .inputrc
