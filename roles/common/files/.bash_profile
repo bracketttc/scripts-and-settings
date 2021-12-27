@@ -20,3 +20,16 @@ YELLOW=$(tput setaf 3)
 RESET=$(tput sgr0)
 
 export PS1="${RESET}\u@\h ${GREEN}\W${YELLOW}\$(parse_git_branch)${RESET}\n$ "
+
+# History options
+
+#[[ "${PROMPT_COMMAND}" =~ "history -a" ]] || export PROMPT_COMMAND="history -a; ${PROMPT_COMMAND}"
+
+# Append instead of overwrite
+shopt -s histappend
+
+# Infinite history
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTTIMEFORMAT="[%F %T] "
+export HISTFILE=~/.bash_eternal_history
