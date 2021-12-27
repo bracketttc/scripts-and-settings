@@ -35,17 +35,11 @@
     dest: "{{ ansible_env.HOME }}/.vim/pack/git-plugins/start/ale"
     repo: https://github.com/dense-analysis/ale.git
 
-- name: Copy .vimrc
+- name: Copy dot files
   copy:
-    src: .vimrc
-    dest: "{{ ansible_env.HOME }}/.vimrc"
-
-- name: Copy .tmux.conf
-  copy:
-    src: .tmux.conf
-    dest: "{{ ansible_env.HOME }}/.tmux.conf"
-
-- name: Copy .bash_profile
-  copy:
-    src: .bash_profile
-    dest: "{{ ansible_env.HOME }}/.bash_profile"
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/{{ item }}"
+  loop:
+    - .vimrc
+    - .tmux.conf
+    - .bash_profile
