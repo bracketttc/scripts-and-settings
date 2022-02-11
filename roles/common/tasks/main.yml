@@ -28,6 +28,31 @@
     state: present
     force: no
 
+- name: Install keybase (RPM)
+  become: yes
+  dnf:
+    name: https://prerelease.keybase.io/keybase_amd64.rpm
+    state: present
+  when:
+    - ansible_distribution == 'Fedora' or ansible_distribution == 'RedHat'
+
+- block:
+  - name: Download keybase (DEB)
+    get_url:
+      url: https://prerelease.keybase.io/keybase_amd64.deb
+      dest: /tmp/keybase_amd64.deb
+  - name: Install keybase (DEB)
+    become: yes
+    apt:
+      deb: /tmp/keybase_amd64.deb
+      state: present
+  when:
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Start keybase
+  shell:
+    cmd: run_keybase -g
+
 - name: Make vim the default git editor
   community.general.ini_file:
       path: "{{ ansible_env.HOME }}/.gitconfig"
