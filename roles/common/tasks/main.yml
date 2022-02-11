@@ -55,10 +55,10 @@
 
 - name: Make vim the default git editor
   community.general.ini_file:
-      path: "{{ ansible_env.HOME }}/.gitconfig"
-      section: core
-      option: editor
-      value: vim
+    path: "{{ ansible_env.HOME }}/.gitconfig"
+    section: core
+    option: editor
+    value: vim
 
 - name: Install ALE
   git:
