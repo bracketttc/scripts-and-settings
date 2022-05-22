@@ -66,6 +66,12 @@
     dest: "{{ ansible_env.HOME }}/.vim/pack/git-plugins/start/ale"
     repo: https://github.com/dense-analysis/ale.git
 
+- name: Install TMux Plugin Manager
+  git:
+    depth: 1
+    dest: "{ ansible_env.HOME }}/.tmux/plugins/tpm"
+    repo: https://github.com/tmux-plugins/tpm.git
+
 - name: Copy dot files
   copy:
     src: "{{ item }}"
