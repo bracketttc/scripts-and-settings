@@ -1,0 +1,10 @@
+---
+- include_role:
+    name: "{{ role }}"
+  loop_control:
+    loop_var: "role"
+  loop:
+    - common
+    - containerhost
+    - virthost
+- include_tasks: cpp.yml

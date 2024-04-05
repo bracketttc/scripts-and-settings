@@ -74,8 +74,10 @@
 
 - name: Copy dot files
   copy:
-    src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/{{ item }}"
+    src: "{{ file }}"
+    dest: "{{ ansible_env.HOME }}/{{ file }}"
+  loop_control:
+    loop_var: "file"
   loop:
     - .vimrc
     - .tmux.conf

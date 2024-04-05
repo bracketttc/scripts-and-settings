@@ -1,0 +1,16 @@
+---
+- name: Install container tools
+  become: true
+  package:
+    name:
+      - podman
+      - buildah
+      - skopeo
+    state: latest
+
+- name: Install podman-docker
+  become: true
+  package:
+    name: podman-docker
+    state: latest
+  ignore_errors: true
