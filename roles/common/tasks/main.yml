@@ -69,7 +69,7 @@
 - name: Install TMux Plugin Manager
   git:
     depth: 1
-    dest: "{ ansible_env.HOME }}/.tmux/plugins/tpm"
+    dest: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
     repo: https://github.com/tmux-plugins/tpm.git
 
 - name: Copy dot files
