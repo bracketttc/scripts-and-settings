@@ -1,0 +1,4 @@
+# This file contains ignores rule violations for ansible-lint
+roles/common/tasks/main.yml latest[git]
+roles/containerhost/tasks/main.yml ignore-errors
+roles/virthost/tasks/main.yml ignore-errors

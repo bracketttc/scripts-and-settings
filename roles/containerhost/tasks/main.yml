@@ -1,16 +1,16 @@
 ---
 - name: Install container tools
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - podman
       - buildah
       - skopeo
-    state: latest
+    state: present
 
 - name: Install podman-docker
   become: true
-  package:
+  ansible.builtin.package:
     name: podman-docker
-    state: latest
+    state: present
   ignore_errors: true

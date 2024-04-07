@@ -1,40 +1,40 @@
 ---
 - name: Check if virtualization is enabled
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /proc/cpuinfo
     regexp: '(svm|vmx)'
     state: present
-  check_mode: yes
+  check_mode: true
   register: presence
   failed_when: presence is changed
 
 - name: Install virtualization packages
-  become: yes
-  package:
+  become: true
+  ansible.builtin.package:
     name:
       - libvirt-daemon
       - libvirt-daemon-kvm
       - qemu-kvm
       - vagrant
       - vagrant-sshfs
-    state: latest
+    state: present
 
-- name: Add current user {{ ansible_user_id  }} to virtualization groups
-  become: yes
-  user:
+- name: Add virtualization groups to current user {{ ansible_user_id }}
+  become: true
+  ansible.builtin.user:
     name: '{{ ansible_user_id }}'
     groups:
-        - kvm
-    append: yes
+      - kvm
+    append: true
 
-- name: Add current user {{ ansible_user_id }} to qemu groups
-  become: yes
-  ignore_errors: yes
-  user:
+- name: Add qemu groups to current user {{ ansible_user_id }}
+  become: true
+  ignore_errors: true
+  ansible.builtin.user:
     name: '{{ ansible_user_id }}'
     groups:
       - "{{ group }}"
-    append: yes
+    append: true
   loop_control:
     loop_var: "group"
   loop:
@@ -43,8 +43,8 @@
     - libvirt-qemu
 
 - name: Start/enable virtualization daemon
-  become: yes
-  service:
-    enabled: yes
+  become: true
+  ansible.builtin.service:
+    enabled: true
     name: libvirtd
     state: started

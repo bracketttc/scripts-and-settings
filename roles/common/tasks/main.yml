@@ -1,57 +1,57 @@
 ---
 - name: Install basic packages
-  become: yes
-  package:
+  become: true
+  ansible.builtin.package:
     name:
       - git
       - tmux
       - vim
-    state: latest
-
-- name: Update packages
-  become: yes
-  package:
-    name: '*'
-    state: latest
+    state: present
 
 - name: Create .ssh dir
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.ssh"
     mode: "700"
     state: directory
 
 - name: Generate ssh keys
-  openssh_keypair:
+  community.crypto.openssh_keypair:
     path: "~/.ssh/id_rsa"
     type: rsa
     size: 4096
     state: present
-    force: no
+    force: false
 
 - name: Install keybase (RPM)
-  become: yes
-  dnf:
+  become: true
+  ansible.builtin.dnf:
     name: https://prerelease.keybase.io/keybase_amd64.rpm
     state: present
   when:
     - ansible_distribution == 'Fedora' or ansible_distribution == 'RedHat'
+    - false
 
-- block:
-  - name: Download keybase (DEB)
-    get_url:
-      url: https://prerelease.keybase.io/keybase_amd64.deb
-      dest: /tmp/keybase_amd64.deb
-  - name: Install keybase (DEB)
-    become: yes
-    apt:
-      deb: /tmp/keybase_amd64.deb
-      state: present
+- name: Install keybase (DEB)
   when:
     - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - false
+  block:
+    - name: Download keybase (DEB)
+      ansible.builtin.get_url:
+        url: https://prerelease.keybase.io/keybase_amd64.deb
+        dest: /tmp/keybase_amd64.deb
+        mode: '600'
+
+    - name: Install keybase (DEB)
+      become: true
+      ansible.builtin.apt:
+        deb: /tmp/keybase_amd64.deb
+        state: present
 
 - name: Start keybase
-  shell:
+  ansible.builtin.command:
     cmd: run_keybase -g
+  when: false
 
 - name: Make vim the default git editor
   community.general.ini_file:
@@ -59,23 +59,25 @@
     section: core
     option: editor
     value: vim
+    mode: '644'
 
 - name: Install ALE
-  git:
+  ansible.builtin.git:
     depth: 1
     dest: "{{ ansible_env.HOME }}/.vim/pack/git-plugins/start/ale"
     repo: https://github.com/dense-analysis/ale.git
 
 - name: Install TMux Plugin Manager
-  git:
+  ansible.builtin.git:
     depth: 1
     dest: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
     repo: https://github.com/tmux-plugins/tpm.git
 
 - name: Copy dot files
-  copy:
+  ansible.builtin.copy:
     src: "{{ file }}"
     dest: "{{ ansible_env.HOME }}/{{ file }}"
+    mode: '644'
   loop_control:
     loop_var: "file"
   loop:

@@ -1,5 +1,6 @@
 ---
-- include_role:
+- name: Include dependency roles
+  ansible.builtin.include_role:
     name: "{{ role }}"
   loop_control:
     loop_var: "role"
@@ -7,4 +8,6 @@
     - common
     - containerhost
     - virthost
-- include_tasks: cpp.yml
+
+- name: Include C++ development tasks
+  ansible.builtin.include_tasks: cpp.yml

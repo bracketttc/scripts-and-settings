@@ -1,7 +1,7 @@
 ---
 - name: Install development tools from system
-  become: yes
-  package:
+  become: true
+  ansible.builtin.package:
     name:
       - clang
       - cmake
@@ -15,11 +15,11 @@
       - make
       - ninja-build
       - valgrind
-    state: latest
+    state: present
 
 - name: Install development tools from Pip
-  become: yes
-  pip:
+  become: true
+  ansible.builtin.pip:
     name:
       - cpplint
-    state: latest
+    state: present

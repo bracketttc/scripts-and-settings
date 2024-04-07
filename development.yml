@@ -1,4 +1,5 @@
 ---
-- hosts: all, localhost
+- name: Configure machine for development
+  hosts: all, localhost
   roles:
     - development
