@@ -22,13 +22,43 @@
     state: present
     force: false
 
-- name: Make vim the default git editor
+- name: Set git configuration options
   community.general.ini_file:
     path: "{{ ansible_env.HOME }}/.gitconfig"
-    section: core
-    option: editor
-    value: vim
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     mode: '644'
+  loop:
+    - section: core
+      option: editor
+      value: vim
+    - section: branch
+      option: sort
+      value: "-committerdate"
+    - section: tag
+      option: sort
+      value: "version:refname"
+    - section: diff
+      option: algorithm
+      value: histogram
+    - section: diff
+      option: colorMoved
+      value: plain
+    - section: diff
+      option: mnemonicPrefix
+      value: "true"
+    - section: diff
+      option: renames
+      value: "true"
+    - section: push
+      option: autoSetupRemote
+      value: "true"
+    - section: commit
+      option: verbose
+      value: "true"
+  loop_control:
+    label: "{{ item.section }}.{{ item.option }}"
 
 - name: Install ALE
   ansible.builtin.git:
