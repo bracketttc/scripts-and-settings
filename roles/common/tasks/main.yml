@@ -6,6 +6,7 @@
       - git
       - tmux
       - vim
+      - sway
     state: present
 
 - name: Create .ssh dir
@@ -85,3 +86,10 @@
     - .tmux.conf
     - .bash_profile
     - .inputrc
+
+- name: Copy sway config
+  ansible.builtin.copy:
+    src: sway_config
+    dest: "{{ ansible_env.HOME }}/.config/sway/config"
+    mode: '644'
+    backup: true
