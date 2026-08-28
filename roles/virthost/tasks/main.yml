@@ -5,8 +5,8 @@
     regexp: '(svm|vmx)'
     state: present
   check_mode: true
-  register: presence
-  failed_when: presence is changed
+  register: virthost_presence
+  failed_when: virthost_presence is changed
 
 - name: Install virtualization packages
   become: true
@@ -19,28 +19,25 @@
       - vagrant-sshfs
     state: present
 
-- name: Add virtualization groups to current user {{ ansible_user_id }}
-  become: true
-  ansible.builtin.user:
-    name: '{{ ansible_user_id }}'
-    groups:
-      - kvm
-    append: true
+- name: Get existing groups
+  ansible.builtin.shell:
+    cmd: cut -d ':' -f 1 /etc/group
+  register: virthost_etc_groups
+  changed_when: false
 
-- name: Add qemu groups to current user {{ ansible_user_id }}
+- name: Add virtualization groups to current user {{ ansible_user_id }}
   become: true
   ignore_errors: true
   ansible.builtin.user:
     name: '{{ ansible_user_id }}'
-    groups:
-      - "{{ group }}"
+    groups: '{{ virthost_etc_groups.stdout_lines | ansible.builtin.intersect(virthost_groups) }}'
     append: true
-  loop_control:
-    loop_var: "group"
-  loop:
-    - qemu
-    - libvirt
-    - libvirt-qemu
+  vars:
+    virthost_groups:
+      - kvm
+      - qemu
+      - libvirt
+      - libvirt-qemu
 
 - name: Start/enable virtualization daemon
   become: true
