@@ -9,6 +9,13 @@
       - sway
     state: present
 
+- name: Uninstall slop or fascist packages
+  become: true
+  ansible.builtin.package:
+    name:
+      - neovim
+    state: absent
+
 - name: Create .ssh dir
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.ssh"
