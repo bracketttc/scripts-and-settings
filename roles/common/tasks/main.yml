@@ -34,6 +34,7 @@
 - name: Authorize ssh key to login to pi
   ansible.builtin.command:
     cmd: ssh-copy-id "{{ raspi_hostname }}"
+  when: raspi_hostname is defined
 
 - name: Set up sshfs remote
   ansible.builtin.template:
