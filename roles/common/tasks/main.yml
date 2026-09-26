@@ -4,6 +4,7 @@
   ansible.builtin.package:
     name:
       - git
+      - fuse-sshfs
       - tmux
       - vim
       - sway
