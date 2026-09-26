@@ -33,3 +33,10 @@ export HISTFILESIZE=
 export HISTSIZE=
 export HISTTIMEFORMAT="[%F %T] "
 export HISTFILE=~/.bash_eternal_history
+
+# Set user-level CMake defaults
+if command -v ninja ; then
+    export CMAKE_GENERATOR=Ninja
+fi
+export CMAKE_EXPORT_COMPILE_COMMANDS=true
+export CMAKE_BUILD_TYPE=Release
