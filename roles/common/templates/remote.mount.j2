@@ -1,0 +1,11 @@
+[Unit]
+Description=Mount my remote filesystem over sshfs with fuse
+
+[Install]
+WantedBy=default.target
+
+[Mount]
+What={{ ansible_facts["user_id"] }}@{{ raspi_hostname }}:{{ ansible_facts["user_dir"] }}/shared
+Where={{ ansible_facts["user_dir"] }}/remote
+Type=fuse.sshfs
+Options=_netdev,IdentityFile={{ ansible_facts["user_dir"] }}/.ssh/id_rsa,reconnect,x-systemd.automount,uid={{ ansible_facts["user_uid"] }},gid={{ ansible_facts["user_gid"] }}

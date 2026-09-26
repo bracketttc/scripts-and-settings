@@ -31,6 +31,25 @@
     state: present
     force: false
 
+- name: Authorize ssh key to login to pi
+  ansible.builtin.command:
+    cmd: ssh-copy-id "{{ raspi_hostname }}"
+
+- name: Set up sshfs remote
+  ansible.builtin.template:
+    src: remote.mount.j2
+    dest: '{{ ansible_facts["user_dir"] }}/.config/systemd/user/home-{{ ansible_facts["user_id"] }}-remote.mount'
+  when: raspi_hostname is defined
+
+- name: Enable sshfs remote automount
+  ansible.builtin.systemd:
+    enabled: true
+    unit: 'home-{{ ansible_facts["user_id"] }}-remote.mount'
+    no_block: true
+    scope: 'user'
+    state: 'started'
+  when: raspi_hostname is defined
+
 - name: Set git configuration options
   community.general.ini_file:
     path: '{{ ansible_facts["user_dir"] }}/.gitconfig'
